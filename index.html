@@ -12,14 +12,22 @@
   :root {
     --bg:      #0d0700;
     --grid:    #1a1008;
-    --c1: #f59e0b;
-    --c2: #ef4444;
-    --c3: #f97316;
-    --c4: #eab308;
-    --c5: #e07b20;
-    --c6: #c84b4b;
-    --c7: #f0a500;
-    --c8: #d97706;
+    --c1:  #f59e0b;
+    --c2:  #ef4444;
+    --c3:  #f97316;
+    --c4:  #eab308;
+    --c5:  #e07b20;
+    --c6:  #c84b4b;
+    --c7:  #f0a500;
+    --c8:  #d97706;
+    --c9:  #fbbf24;
+    --c10: #dc2626;
+    --c11: #ea580c;
+    --c12: #ca8a04;
+    --c13: #9a3412;
+    --c14: #a16207;
+    --c15: #c2410c;
+    --c16: #b45309;
   }
 
   body {
@@ -277,6 +285,107 @@
     max-width: 90%;
   }
 
+  /* ── SHARE BUTTON ───────────────────────────── */
+  .share-btn {
+    position: absolute;
+    top: 6px;
+    right: 7px;
+    z-index: 2;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 3px;
+    color: var(--color);
+    opacity: 0;
+    transition: opacity 0.15s ease, transform 0.1s ease;
+    line-height: 1;
+    border-radius: 3px;
+  }
+
+  .tile:hover .share-btn { opacity: 0.55; }
+  .share-btn:hover { opacity: 1 !important; transform: scale(1.2); }
+
+  /* ── TOAST ──────────────────────────────────── */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    background: #1a1008;
+    color: #f59e0b;
+    border: 1px solid #5a3c10;
+    padding: 8px 18px;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+    z-index: 999;
+    white-space: nowrap;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ── HIGHLIGHTED (sdílená hláška čeká na klik) ── */
+  @keyframes highlight-pulse {
+    0%, 100% { box-shadow: 0 0 18px -4px var(--color); }
+    50%       { box-shadow: 0 0 55px -4px var(--color), 0 0 90px -10px var(--color); }
+  }
+
+  .tile.highlighted {
+    animation: highlight-pulse 1.2s ease-in-out infinite;
+  }
+
+  .tile.highlighted::before { opacity: 0.22 !important; }
+  .tile.highlighted::after  { opacity: 1; }
+
+  /* ── ABOUT ──────────────────────────────────── */
+  .about {
+    max-width: 620px;
+    width: 100%;
+    margin-top: 60px;
+    border-top: 1px solid #2a1a08;
+    padding-top: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .about p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    line-height: 1.85;
+    color: #5a3e1c;
+    letter-spacing: 0.02em;
+  }
+
+  .about-sig {
+    color: #8a6030;
+    font-style: italic;
+  }
+
+  .bmc-btn {
+    display: inline-block;
+    margin-top: 8px;
+  }
+
+  .bmc-btn img {
+    height: 40px;
+    border-radius: 6px;
+    opacity: 0.88;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .bmc-btn:hover img {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
   /* ── FOOTER ─────────────────────────────────── */
   footer {
     margin-top: 48px;
@@ -291,7 +400,7 @@
 <body>
 
 <header>
-  <p class="badge">Legendární český seriál &nbsp;·&nbsp; ČT1</p>
+  <p class="badge">Legendární český seriál</p>
   <h1>
     <span class="prefix">Pan</span>
     <span class="name">Babula</span>
@@ -302,18 +411,38 @@
 
 <div class="grid" id="grid"></div>
 
+<section class="about">
+  <p>Pan Babula je jedna z těch postav, které se do člověka zaryjí. Není to tím, že by říkal něco světoborného — je to tím, jak to říká. S tím klidem, tou moudrostí, tím neomylným načasováním. Pár jeho vět mi uvízlo v hlavě a od té doby je opakuju v práci, doma, u piva. Tak jsem je dal na jedno místo.</p>
+  <p>Tahle stránka nemá žádný byznys plán. Autorská práva patří tvůrcům seriálu Hospoda — já jim jen dlužím poděkování za to, že Babulu stvořili. Pokud to někoho urazí, stránku bez diskuze stáhnu. Ale doufám, že ne. Doufám, že si naopak někdo vzpomene na scénu, která ho kdysi rozesmála, nebo ji pošle kamarádovi, který Hospodu nezná — a třeba si ji pustí.</p>
+  <p>Hlášky patří světu. Já je jen seřadil. <span class="about-sig">— Michal</span></p>
+
+  <a class="bmc-btn" href="https://buymeacoffee.com/michalp" target="_blank" rel="noopener">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" />
+  </a>
+</section>
+
 <footer>Klikni na dlaždici — přehraje se hlášce &nbsp;·&nbsp; Hospoda © ČT</footer>
+
+<div class="toast" id="toast"></div>
 
 <script>
 const sounds = [
-  { num: '008', file: 'Audio_files/008_dohrano.mp3',             icon: '🎬', label: 'Dohráno',                         color: 'var(--c1)' },
-  { num: '007', file: 'Audio_files/007_parpivtenezabije.mp3',    icon: '🍻', label: 'Pár piv tě\nnezabije',             color: 'var(--c2)' },
-  { num: '006', file: 'Audio_files/006_petpiv.mp3',              icon: '🍻', label: 'Mařenko, hoď\nnám sem pět piv!',   color: 'var(--c3)' },
-  { num: '005', file: 'Audio_files/005_aperetiv.mp3',            icon: '🥃', label: 'Apéritiv',                         color: 'var(--c4)' },
-  { num: '004', file: 'Audio_files/004_panbabula.mp3',           icon: '👨', label: 'Pan\nBabula',                      color: 'var(--c5)' },
-  { num: '003', file: 'Audio_files/003_jabychsidalpivo.mp3',     icon: '🍺', label: 'Já bych si\ndal … pivo?',          color: 'var(--c6)' },
-  { num: '002', file: 'Audio_files/002_ozralejstrilzlivej.mp3',  icon: '🍺', label: 'Ožralej –\nstřízlivej',            color: 'var(--c7)' },
-  { num: '001', file: 'Audio_files/001_michanyvajicka.mp3',      icon: '🍳', label: 'Míchaná\nvajíčka',                 color: 'var(--c8)' },
+  { num: '016', file: 'Audio_files/016_skocit.mp3',              icon: '🏃', label: 'Chci si\nskočit',                  color: 'var(--c1)'  },
+  { num: '015', file: 'Audio_files/015_mocrychly.mp3',           icon: '😢', label: 'Osiřelo\nmi dítě',                 color: 'var(--c2)'  },
+  { num: '014', file: 'Audio_files/014_slivovicka.mp3',          icon: '🥃', label: 'To je\nslivovovička,\nmilostpaní', color: 'var(--c3)'  },
+  { num: '013', file: 'Audio_files/013_fefrmintska.mp3',         icon: '🌿', label: 'Fefrmintska',                      color: 'var(--c4)'  },
+  { num: '012', file: 'Audio_files/012_jestepivo.mp3',           icon: '👍', label: 'Jo',                               color: 'var(--c5)'  },
+  { num: '011', file: 'Audio_files/011_moment.mp3',              icon: '💀', label: 'Ty už máš\ndohráno',               color: 'var(--c6)'  },
+  { num: '010', file: 'Audio_files/010_penize.mp3',              icon: '🚫', label: 'Na práci to\nnešáhne',             color: 'var(--c7)'  },
+  { num: '009', file: 'Audio_files/009_pazdrat.mp3',             icon: '🎩', label: 'Pazdráte',                         color: 'var(--c8)'  },
+  { num: '008', file: 'Audio_files/008_dohrano.mp3',             icon: '🎬', label: 'Dohráno',                          color: 'var(--c9)'  },
+  { num: '007', file: 'Audio_files/007_parpivtenezabije.mp3',    icon: '🍻', label: 'Pár piv tě\nnezabije',             color: 'var(--c10)' },
+  { num: '006', file: 'Audio_files/006_petpiv.mp3',              icon: '🍻', label: 'Mařenko, hoď\nnám sem pět piv!',   color: 'var(--c11)' },
+  { num: '005', file: 'Audio_files/005_aperetiv.mp3',            icon: '🥃', label: 'Apéritiv',                         color: 'var(--c12)' },
+  { num: '004', file: 'Audio_files/004_panbabula.mp3',           icon: '👨', label: 'Pan\nBabula',                      color: 'var(--c13)' },
+  { num: '003', file: 'Audio_files/003_jabychsidalpivo.mp3',     icon: '🍺', label: 'Já bych si\ndal … pivo?',          color: 'var(--c14)' },
+  { num: '002', file: 'Audio_files/002_ozralejstrilzlivej.mp3',  icon: '🍺', label: 'Ožralej –\nstřízlivej',            color: 'var(--c15)' },
+  { num: '001', file: 'Audio_files/001_michanyvajicka.mp3',      icon: '🍳', label: 'Míchaná\nvajíčka',                 color: 'var(--c16)' },
 ];
 
 let currentAudio = null;
@@ -341,6 +470,12 @@ sounds.forEach((s) => {
   btn.innerHTML = `
     <div class="tile-inner">
       <span class="tile-num">${s.num}</span>
+      <button class="share-btn" aria-label="Sdílet hlášku" title="Sdílet">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+      </button>
       <div class="tile-icon">${s.icon}</div>
       <div class="wave">
         <span></span><span></span><span></span><span></span><span></span>
@@ -348,6 +483,20 @@ sounds.forEach((s) => {
       <div class="tile-label">${s.label.replace('\n', '<br>')}</div>
     </div>
   `;
+
+  // Sdílení
+  btn.querySelector('.share-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const url = new URL(window.location.href);
+    url.search = '';
+    url.searchParams.set('play', s.num);
+    const shareUrl = url.toString();
+    if (navigator.share) {
+      navigator.share({ title: `Pan Babula – ${s.label.replace(/\n/g, ' ')}`, url: shareUrl }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(shareUrl).then(() => showToast('Odkaz zkopírován!')).catch(() => showToast('Nelze zkopírovat'));
+    }
+  });
 
   btn.addEventListener('click', (e) => {
     // Ripple efekt
@@ -392,6 +541,59 @@ sounds.forEach((s) => {
 
   grid.appendChild(btn);
 });
+
+// Toast notifikace
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => toast.classList.remove('show'), 2400);
+}
+
+// Auto-play ze sdíleného URL (?play=009)
+(function () {
+  const param = new URLSearchParams(window.location.search).get('play');
+  if (!param) return;
+  const idx = sounds.findIndex(s => s.num === param);
+  if (idx === -1) return;
+
+  const tiles = document.querySelectorAll('.tile');
+  const target = tiles[idx];
+  const s = sounds[idx];
+
+  // Počkej na dokončení animace
+  setTimeout(() => {
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.classList.add('highlighted');
+
+    const audio = new Audio(s.file);
+    currentAudio = audio;
+    currentTile  = target;
+
+    audio.play().then(() => {
+      target.classList.remove('highlighted');
+      target.classList.add('playing');
+      audio.addEventListener('ended', () => {
+        if (currentAudio === audio) {
+          target.classList.remove('playing');
+          currentAudio = null;
+          currentTile  = null;
+        }
+      });
+    }).catch(() => {
+      // Autoplay zablokován — přehraj po prvním kliknutí uživatele
+      showToast('Klikni pro přehrání');
+      const playOnce = () => {
+        document.removeEventListener('click', playOnce);
+        if (currentTile === target) return; // user klikl přímo na dlaždici
+        target.classList.remove('highlighted');
+        target.click();
+      };
+      document.addEventListener('click', playOnce);
+    });
+  }, 900);
+})();
 
 // Animace při načtení
 document.querySelectorAll('.tile').forEach((tile, i) => {
