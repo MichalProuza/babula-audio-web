@@ -344,6 +344,31 @@
   .tile.highlighted::before { opacity: 0.22 !important; }
   .tile.highlighted::after  { opacity: 1; }
 
+  /* ── ABOUT ──────────────────────────────────── */
+  .about {
+    max-width: 620px;
+    width: 100%;
+    margin-top: 60px;
+    border-top: 1px solid #2a1a08;
+    padding-top: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .about p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    line-height: 1.85;
+    color: #5a3e1c;
+    letter-spacing: 0.02em;
+  }
+
+  .about-sig {
+    color: #8a6030;
+    font-style: italic;
+  }
+
   /* ── FOOTER ─────────────────────────────────── */
   footer {
     margin-top: 48px;
@@ -368,6 +393,12 @@
 </header>
 
 <div class="grid" id="grid"></div>
+
+<section class="about">
+  <p>Pan Babula je jedna z těch postav, které se do člověka zaryjí. Není to tím, že by říkal něco světoborného — je to tím, jak to říká. S tím klidem, tou moudrostí, tím neomylným načasováním. Pár jeho vět mi uvízlo v hlavě a od té doby je opakuju v práci, doma, u piva. Tak jsem je dal na jedno místo.</p>
+  <p>Tahle stránka nemá žádný byznys plán. Autorská práva patří tvůrcům seriálu Hospoda — já jim jen dlužím poděkování za to, že Babulu stvořili. Pokud to někoho urazí, stránku bez diskuze stáhnu. Ale doufám, že ne. Doufám, že si naopak někdo vzpomene na scénu, která ho kdysi rozesmála, nebo ji pošle kamarádovi, který Hospodu nezná — a třeba si ji pustí.</p>
+  <p>Hlášky patří světu. Já je jen seřadil. <span class="about-sig">— Michal</span></p>
+</section>
 
 <footer>Klikni na dlaždici — přehraje se hlášce &nbsp;·&nbsp; Hospoda © ČT</footer>
 
