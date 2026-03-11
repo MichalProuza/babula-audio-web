@@ -12,14 +12,22 @@
   :root {
     --bg:      #0d0700;
     --grid:    #1a1008;
-    --c1: #f59e0b;
-    --c2: #ef4444;
-    --c3: #f97316;
-    --c4: #eab308;
-    --c5: #e07b20;
-    --c6: #c84b4b;
-    --c7: #f0a500;
-    --c8: #d97706;
+    --c1:  #f59e0b;
+    --c2:  #ef4444;
+    --c3:  #f97316;
+    --c4:  #eab308;
+    --c5:  #e07b20;
+    --c6:  #c84b4b;
+    --c7:  #f0a500;
+    --c8:  #d97706;
+    --c9:  #fbbf24;
+    --c10: #dc2626;
+    --c11: #ea580c;
+    --c12: #ca8a04;
+    --c13: #9a3412;
+    --c14: #a16207;
+    --c15: #c2410c;
+    --c16: #b45309;
   }
 
   body {
@@ -291,7 +299,7 @@
 <body>
 
 <header>
-  <p class="badge">Legendární český seriál &nbsp;·&nbsp; ČT1</p>
+  <p class="badge">Legendární český seriál</p>
   <h1>
     <span class="prefix">Pan</span>
     <span class="name">Babula</span>
@@ -306,14 +314,22 @@
 
 <script>
 const sounds = [
-  { num: '008', file: 'Audio_files/008_dohrano.mp3',             icon: '🎬', label: 'Dohráno',                         color: 'var(--c1)' },
-  { num: '007', file: 'Audio_files/007_parpivtenezabije.mp3',    icon: '🍻', label: 'Pár piv tě\nnezabije',             color: 'var(--c2)' },
-  { num: '006', file: 'Audio_files/006_petpiv.mp3',              icon: '🍻', label: 'Mařenko, hoď\nnám sem pět piv!',   color: 'var(--c3)' },
-  { num: '005', file: 'Audio_files/005_aperetiv.mp3',            icon: '🥃', label: 'Apéritiv',                         color: 'var(--c4)' },
-  { num: '004', file: 'Audio_files/004_panbabula.mp3',           icon: '👨', label: 'Pan\nBabula',                      color: 'var(--c5)' },
-  { num: '003', file: 'Audio_files/003_jabychsidalpivo.mp3',     icon: '🍺', label: 'Já bych si\ndal … pivo?',          color: 'var(--c6)' },
-  { num: '002', file: 'Audio_files/002_ozralejstrilzlivej.mp3',  icon: '🍺', label: 'Ožralej –\nstřízlivej',            color: 'var(--c7)' },
-  { num: '001', file: 'Audio_files/001_michanyvajicka.mp3',      icon: '🍳', label: 'Míchaná\nvajíčka',                 color: 'var(--c8)' },
+  { num: '016', file: 'Audio_files/016_chcisiskocit.mp3',        icon: '🏃', label: 'Chci si\nskočit',                  color: 'var(--c1)'  },
+  { num: '015', file: 'Audio_files/015_osirelomidite.mp3',       icon: '😢', label: 'Osiřelo\nmi dítě',                 color: 'var(--c2)'  },
+  { num: '014', file: 'Audio_files/014_tojeslvovicka.mp3',       icon: '🥃', label: 'To je\nslivovovička,\nmilostpaní', color: 'var(--c3)'  },
+  { num: '013', file: 'Audio_files/013_fefrmintska.mp3',         icon: '🌿', label: 'Fefrmintska',                      color: 'var(--c4)'  },
+  { num: '012', file: 'Audio_files/012_jo.mp3',                  icon: '👍', label: 'Jo',                               color: 'var(--c5)'  },
+  { num: '011', file: 'Audio_files/011_tyuzmasdohrano.mp3',      icon: '💀', label: 'Ty už máš\ndohráno',               color: 'var(--c6)'  },
+  { num: '010', file: 'Audio_files/010_napracitonesakne.mp3',    icon: '🚫', label: 'Na práci to\nnešáhne',             color: 'var(--c7)'  },
+  { num: '009', file: 'Audio_files/009_pazdrate.mp3',            icon: '🎩', label: 'Pazdráte',                         color: 'var(--c8)'  },
+  { num: '008', file: 'Audio_files/008_dohrano.mp3',             icon: '🎬', label: 'Dohráno',                          color: 'var(--c9)'  },
+  { num: '007', file: 'Audio_files/007_parpivtenezabije.mp3',    icon: '🍻', label: 'Pár piv tě\nnezabije',             color: 'var(--c10)' },
+  { num: '006', file: 'Audio_files/006_petpiv.mp3',              icon: '🍻', label: 'Mařenko, hoď\nnám sem pět piv!',   color: 'var(--c11)' },
+  { num: '005', file: 'Audio_files/005_aperetiv.mp3',            icon: '🥃', label: 'Apéritiv',                         color: 'var(--c12)' },
+  { num: '004', file: 'Audio_files/004_panbabula.mp3',           icon: '👨', label: 'Pan\nBabula',                      color: 'var(--c13)' },
+  { num: '003', file: 'Audio_files/003_jabychsidalpivo.mp3',     icon: '🍺', label: 'Já bych si\ndal … pivo?',          color: 'var(--c14)' },
+  { num: '002', file: 'Audio_files/002_ozralejstrilzlivej.mp3',  icon: '🍺', label: 'Ožralej –\nstřízlivej',            color: 'var(--c15)' },
+  { num: '001', file: 'Audio_files/001_michanyvajicka.mp3',      icon: '🍳', label: 'Míchaná\nvajíčka',                 color: 'var(--c16)' },
 ];
 
 let currentAudio = null;
