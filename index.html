@@ -285,6 +285,65 @@
     max-width: 90%;
   }
 
+  /* ── SHARE BUTTON ───────────────────────────── */
+  .share-btn {
+    position: absolute;
+    top: 6px;
+    right: 7px;
+    z-index: 2;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 3px;
+    color: var(--color);
+    opacity: 0;
+    transition: opacity 0.15s ease, transform 0.1s ease;
+    line-height: 1;
+    border-radius: 3px;
+  }
+
+  .tile:hover .share-btn { opacity: 0.55; }
+  .share-btn:hover { opacity: 1 !important; transform: scale(1.2); }
+
+  /* ── TOAST ──────────────────────────────────── */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    background: #1a1008;
+    color: #f59e0b;
+    border: 1px solid #5a3c10;
+    padding: 8px 18px;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+    z-index: 999;
+    white-space: nowrap;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ── HIGHLIGHTED (sdílená hláška čeká na klik) ── */
+  @keyframes highlight-pulse {
+    0%, 100% { box-shadow: 0 0 18px -4px var(--color); }
+    50%       { box-shadow: 0 0 55px -4px var(--color), 0 0 90px -10px var(--color); }
+  }
+
+  .tile.highlighted {
+    animation: highlight-pulse 1.2s ease-in-out infinite;
+  }
+
+  .tile.highlighted::before { opacity: 0.22 !important; }
+  .tile.highlighted::after  { opacity: 1; }
+
   /* ── FOOTER ─────────────────────────────────── */
   footer {
     margin-top: 48px;
@@ -311,6 +370,8 @@
 <div class="grid" id="grid"></div>
 
 <footer>Klikni na dlaždici — přehraje se hlášce &nbsp;·&nbsp; Hospoda © ČT</footer>
+
+<div class="toast" id="toast"></div>
 
 <script>
 const sounds = [
@@ -357,6 +418,12 @@ sounds.forEach((s) => {
   btn.innerHTML = `
     <div class="tile-inner">
       <span class="tile-num">${s.num}</span>
+      <button class="share-btn" aria-label="Sdílet hlášku" title="Sdílet">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+      </button>
       <div class="tile-icon">${s.icon}</div>
       <div class="wave">
         <span></span><span></span><span></span><span></span><span></span>
@@ -364,6 +431,20 @@ sounds.forEach((s) => {
       <div class="tile-label">${s.label.replace('\n', '<br>')}</div>
     </div>
   `;
+
+  // Sdílení
+  btn.querySelector('.share-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const url = new URL(window.location.href);
+    url.search = '';
+    url.searchParams.set('play', s.num);
+    const shareUrl = url.toString();
+    if (navigator.share) {
+      navigator.share({ title: `Pan Babula – ${s.label.replace(/\n/g, ' ')}`, url: shareUrl }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(shareUrl).then(() => showToast('Odkaz zkopírován!')).catch(() => showToast('Nelze zkopírovat'));
+    }
+  });
 
   btn.addEventListener('click', (e) => {
     // Ripple efekt
@@ -408,6 +489,59 @@ sounds.forEach((s) => {
 
   grid.appendChild(btn);
 });
+
+// Toast notifikace
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => toast.classList.remove('show'), 2400);
+}
+
+// Auto-play ze sdíleného URL (?play=009)
+(function () {
+  const param = new URLSearchParams(window.location.search).get('play');
+  if (!param) return;
+  const idx = sounds.findIndex(s => s.num === param);
+  if (idx === -1) return;
+
+  const tiles = document.querySelectorAll('.tile');
+  const target = tiles[idx];
+  const s = sounds[idx];
+
+  // Počkej na dokončení animace
+  setTimeout(() => {
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.classList.add('highlighted');
+
+    const audio = new Audio(s.file);
+    currentAudio = audio;
+    currentTile  = target;
+
+    audio.play().then(() => {
+      target.classList.remove('highlighted');
+      target.classList.add('playing');
+      audio.addEventListener('ended', () => {
+        if (currentAudio === audio) {
+          target.classList.remove('playing');
+          currentAudio = null;
+          currentTile  = null;
+        }
+      });
+    }).catch(() => {
+      // Autoplay zablokován — přehraj po prvním kliknutí uživatele
+      showToast('Klikni pro přehrání');
+      const playOnce = () => {
+        document.removeEventListener('click', playOnce);
+        if (currentTile === target) return; // user klikl přímo na dlaždici
+        target.classList.remove('highlighted');
+        target.click();
+      };
+      document.addEventListener('click', playOnce);
+    });
+  }, 900);
+})();
 
 // Animace při načtení
 document.querySelectorAll('.tile').forEach((tile, i) => {
