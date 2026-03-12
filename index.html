@@ -362,6 +362,15 @@
     line-height: 1.85;
     color: #5a3e1c;
     letter-spacing: 0.02em;
+    opacity: 0.15;
+    transform: translateY(10px);
+    transition: opacity 0.8s ease, transform 0.8s ease, color 0.8s ease;
+  }
+
+  .about p.revealed {
+    opacity: 1;
+    transform: translateY(0);
+    color: #8a6a38;
   }
 
   .about-sig {
@@ -372,6 +381,14 @@
   .bmc-btn {
     display: inline-block;
     margin-top: 8px;
+    opacity: 0.15;
+    transform: translateY(10px);
+    transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+  }
+
+  .bmc-btn.revealed {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .bmc-btn img {
@@ -625,6 +642,20 @@ document.querySelectorAll('.tile').forEach((tile, i) => {
       tile.style.transition = 'transform 0.08s ease, box-shadow 0.08s ease';
     }, 650 + i * 70);
   });
+});
+
+// Postupné zesvětlování textu About sekce při scrollování
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('revealed');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.about p, .about .bmc-btn').forEach((el) => {
+  revealObserver.observe(el);
 });
 </script>
 </body>
