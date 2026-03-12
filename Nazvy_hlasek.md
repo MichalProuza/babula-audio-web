@@ -31,17 +31,17 @@ Soubory v `Audio_files/` pojmenovávej: `001_nazevbezdiakritikyamezer.mp3`
 | 018 | Topení plynem | `018_topeniplynem.mp3` |
 | 019 | Havaj | `019_havaj.mp3` |
 | 020 | Co hledáš, strejdo? | `020_cohledasstrejdo.mp3` |
-| 021 | Éro, Šenka! | `021_erosenka.mp3` |
+| 021 | Erosenka | `021_erosenka.mp3` |
 | 022 | Dobrej den | `022_dobrejden.mp3` |
-| 023 | Laškonků | `023_laskonku.mp3` |
+| 023 | Laskonka | `023_laskonku.mp3` |
 | 024 | Co to je? | `024_cotoje.mp3` |
 | 025 | Trotl | `025_trotl.mp3` |
 | 026 | Na svým místě | `026_nasvymmiste.mp3` |
 | 027 | Zmetci | `027_zmetci.mp3` |
 | 028 | Poklopec | `028_poklopec.mp3` |
-| 029 | Čemr | `029_cemr.mp3` |
+| 029 | Cemr | `029_cemr.mp3` |
 | 030 | Svý lidi | `030_svylidi.mp3` |
-| 031 | Jedovatej Pešík | `031_jedovatejpesi.mp3` |
+| 031 | Jedovatej psík | `031_jedovatejpesi.mp3` |
 | 032 | The Kouks | `032_thekouks.mp3` |
 
 ---
