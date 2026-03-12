@@ -27,7 +27,6 @@ Soubory v `Audio_files/` pojmenovávej: `001_nazevbezdiakritikyamezer.mp3`
 | 014 | To je slivovovička, milostpaní | `014_slivovicka.mp3` |
 | 015 | Osiřelo mi dítě | `015_mocrychly.mp3` |
 | 016 | Chci si skočit | `016_skocit.mp3` |
-
 | 017 | Flákání | `017_flakani.mp3` |
 | 018 | Topení plynem | `018_topeniplynem.mp3` |
 | 019 | Havaj | `019_havaj.mp3` |
