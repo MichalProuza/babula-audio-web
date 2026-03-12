@@ -378,17 +378,42 @@
     font-style: italic;
   }
 
-  .bmc-btn {
-    display: inline-block;
-    margin-top: 8px;
+  /* ── SUPPORT SECTION ────────────────────────── */
+  .support {
+    max-width: 620px;
+    width: 100%;
+    margin-top: 48px;
+    border-top: 1px solid #2a1a08;
+    padding-top: 32px;
+    text-align: center;
     opacity: 0.15;
     transform: translateY(10px);
-    transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+    transition: opacity 0.8s ease, transform 0.8s ease;
   }
 
-  .bmc-btn.revealed {
+  .support.revealed {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .support-heading {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    color: #8a6a38;
+    margin-bottom: 24px;
+  }
+
+  .support-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .bmc-btn {
+    display: inline-block;
   }
 
   .bmc-btn img {
@@ -401,6 +426,35 @@
   .bmc-btn:hover img {
     opacity: 1;
     transform: translateY(-2px);
+  }
+
+  .qr-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .qr-wrap img {
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    background: #fff;
+    padding: 4px;
+    opacity: 0.88;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .qr-wrap:hover img {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
+  .qr-wrap span {
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #5a3c10;
   }
 
   /* ── FOOTER ─────────────────────────────────── */
@@ -432,10 +486,19 @@
   <p>Pan Babula je jedna z těch postav, které se do člověka zaryjí. Není to tím, že by říkal něco světoborného — je to tím, jak to říká. S tím klidem, tou moudrostí, tím neomylným načasováním. Pár jeho vět mi uvízlo v hlavě a od té doby je opakuju v práci, doma, u piva. Tak jsem je dal na jedno místo.</p>
   <p>Tahle stránka nemá žádný byznys plán. Autorská práva patří tvůrcům seriálu Hospoda — já jim jen dlužím poděkování za to, že Babulu stvořili. Pokud to někoho urazí, stránku bez diskuze stáhnu. Ale doufám, že ne. Doufám, že si naopak někdo vzpomene na scénu, která ho kdysi rozesmála, nebo ji pošle kamarádovi, který Hospodu nezná — a třeba si ji pustí.</p>
   <p>Hlášky patří světu. Já je jen seřadil. <span class="about-sig">— Michal</span></p>
+</section>
 
-  <a class="bmc-btn" href="https://buymeacoffee.com/michalp" target="_blank" rel="noopener">
-    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" />
-  </a>
+<section class="support" id="support">
+  <p class="support-heading">Chceš podpořit tuto stránku a přidat další hlášky?<br>Kup mi kafe, díky.</p>
+  <div class="support-links">
+    <a class="bmc-btn" href="https://buymeacoffee.com/michalp" target="_blank" rel="noopener">
+      <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" />
+    </a>
+    <div class="qr-wrap">
+      <img src="qr_platba.png" alt="QR Platba" />
+      <span>QR Platba</span>
+    </div>
+  </div>
 </section>
 
 <footer>Klikni na dlaždici — přehraje se hlášce &nbsp;·&nbsp; Hospoda © ČT</footer>
@@ -654,7 +717,7 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.3 });
 
-document.querySelectorAll('.about p, .about .bmc-btn').forEach((el) => {
+document.querySelectorAll('.about p, .support').forEach((el) => {
   revealObserver.observe(el);
 });
 </script>
