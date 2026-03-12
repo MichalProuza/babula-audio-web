@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pan Babula – Soundboard</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d0700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Babula">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@800;900&display=swap');
 
@@ -63,13 +70,35 @@
     margin-bottom: 52px;
   }
 
+  .hero-img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 15%;
+    border: 3px solid rgba(245, 158, 11, 0.35);
+    box-shadow: 0 0 40px rgba(245, 158, 11, 0.15), 0 0 80px rgba(245, 158, 11, 0.06);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: scale(0.8);
+    animation: hero-appear 0.8s ease 0.2s forwards;
+  }
+
+  @keyframes hero-appear {
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @media (max-width: 600px) {
+    .hero-img { width: 110px; height: 110px; }
+  }
+
   .badge {
     display: inline-block;
     font-size: 0.6rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: #8a6020;
-    border: 1px solid #3a2808;
+    color: #b8842e;
+    border: 1px solid #4a3510;
     padding: 4px 12px;
     border-radius: 2px;
     margin-bottom: 16px;
@@ -97,15 +126,15 @@
     display: block;
     font-size: 0.45em;
     letter-spacing: 0.1em;
-    color: #5a3c10;
-    -webkit-text-fill-color: #5a3c10;
+    color: #8a6a30;
+    -webkit-text-fill-color: #8a6a30;
     filter: none;
     margin-bottom: 4px;
   }
 
   .subtitle {
     margin-top: 14px;
-    color: #6b4a18;
+    color: #9a7030;
     font-size: 0.7rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -278,7 +307,7 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color);
-    opacity: 0.8;
+    opacity: 0.92;
     text-align: center;
     font-weight: 700;
     line-height: 1.3;
@@ -358,9 +387,9 @@
 
   .about p {
     font-family: 'Space Mono', monospace;
-    font-size: 0.72rem;
-    line-height: 1.85;
-    color: #5a3e1c;
+    font-size: 0.75rem;
+    line-height: 1.9;
+    color: #6a5028;
     letter-spacing: 0.02em;
     opacity: 0.15;
     transform: translateY(10px);
@@ -370,11 +399,11 @@
   .about p.revealed {
     opacity: 1;
     transform: translateY(0);
-    color: #8a6a38;
+    color: #b8956a;
   }
 
   .about-sig {
-    color: #8a6030;
+    color: #c8a060;
     font-style: italic;
   }
 
@@ -398,9 +427,9 @@
 
   .support-heading {
     font-family: 'Space Mono', monospace;
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     line-height: 1.7;
-    color: #8a6a38;
+    color: #b8956a;
     margin-bottom: 24px;
   }
 
@@ -454,13 +483,118 @@
     font-size: 0.55rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #5a3c10;
+    color: #8a6a38;
+  }
+
+  /* ── INSTALL SECTION ──────────────────────────── */
+  .install {
+    max-width: 620px;
+    width: 100%;
+    margin-top: 48px;
+    border-top: 1px solid #2a1a08;
+    padding-top: 32px;
+    opacity: 0.15;
+    transform: translateY(10px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .install.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .install-heading {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #f59e0b;
+    text-align: center;
+    margin-bottom: 24px;
+    letter-spacing: 0.02em;
+  }
+
+  .install-platform {
+    margin-bottom: 24px;
+  }
+
+  .install-platform h3 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #e0a040;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .install-platform h3 .platform-icon {
+    font-style: normal;
+    font-size: 1rem;
+  }
+
+  .install-steps {
+    list-style: none;
+    counter-reset: step;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .install-steps li {
+    counter-increment: step;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    line-height: 1.7;
+    color: #b8956a;
+    padding-left: 28px;
+    position: relative;
+  }
+
+  .install-steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: #f59e0b;
+    font-size: 0.55rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 18px;
+  }
+
+  .install-steps .key {
+    display: inline-block;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    border-radius: 3px;
+    padding: 1px 6px;
+    font-size: 0.6rem;
+    color: #f59e0b;
+    vertical-align: middle;
+  }
+
+  .install-divider {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #3a2808, transparent);
+    margin: 8px 0 20px;
   }
 
   /* ── FOOTER ─────────────────────────────────── */
   footer {
     margin-top: 48px;
-    color: #2e1e08;
+    color: #5a4020;
     font-size: 0.6rem;
     letter-spacing: 0.18em;
     text-align: center;
@@ -471,6 +605,7 @@
 <body>
 
 <header>
+  <img class="hero-img" src="babula.jpg" alt="Pan Babula" />
   <p class="badge">Legendární český seriál</p>
   <h1>
     <span class="prefix">Pan</span>
@@ -498,6 +633,43 @@
       <img src="qr_platba.png" alt="QR Platba" />
       <span>QR Platba</span>
     </div>
+  </div>
+</section>
+
+<section class="install" id="install">
+  <h2 class="install-heading">Nainstaluj si Babulu jako appku</h2>
+
+  <div class="install-platform">
+    <h3><i class="platform-icon">&#63743;</i> iPhone / iPad</h3>
+    <ol class="install-steps">
+      <li>Otevři <strong>babula.cz</strong> v Safari</li>
+      <li>Klepni na ikonu <span class="key">Sdílení</span> (čtvereček se šipkou nahoru) dole na liště</li>
+      <li>Sjeď dolů a vyber <span class="key">Přidat na plochu</span></li>
+      <li>Potvrď klepnutím na <span class="key">Přidat</span> — hotovo!</li>
+    </ol>
+  </div>
+
+  <div class="install-divider"></div>
+
+  <div class="install-platform">
+    <h3><i class="platform-icon">&#9654;</i> Android</h3>
+    <ol class="install-steps">
+      <li>Otevři <strong>babula.cz</strong> v Chrome</li>
+      <li>Chrome ti sám nabídne banner <span class="key">Nainstalovat</span> — klepni na něj</li>
+      <li>Pokud se banner nezobrazí: klepni na <span class="key">&#8942;</span> (tři tečky vpravo nahoře) a vyber <span class="key">Nainstalovat aplikaci</span></li>
+      <li>Potvrď instalaci — Babula se objeví mezi tvými appkami</li>
+    </ol>
+  </div>
+
+  <div class="install-divider"></div>
+
+  <div class="install-platform">
+    <h3><i class="platform-icon">&#128187;</i> Počítač (Chrome / Edge)</h3>
+    <ol class="install-steps">
+      <li>Otevři <strong>babula.cz</strong> v Chrome nebo Edge</li>
+      <li>Klikni na ikonu instalace v adresním řádku (nebo v menu <span class="key">&#8942;</span> &rarr; <span class="key">Nainstalovat</span>)</li>
+      <li>Babula se otevře jako samostatné okno bez prohlížeče</li>
+    </ol>
   </div>
 </section>
 
@@ -717,9 +889,14 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.3 });
 
-document.querySelectorAll('.about p, .support').forEach((el) => {
+document.querySelectorAll('.about p, .support, .install').forEach((el) => {
   revealObserver.observe(el);
 });
+
+// Service Worker registrace
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
 </script>
 </body>
 </html>
