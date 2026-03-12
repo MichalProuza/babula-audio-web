@@ -1,0 +1,18 @@
+{
+  "name": "Pan Babula – Soundboard",
+  "short_name": "Babula",
+  "description": "Soundboard legendárního pana Babuly ze seriálu Hospoda",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0700",
+  "theme_color": "#0d0700",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
