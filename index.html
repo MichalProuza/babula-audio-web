@@ -147,6 +147,74 @@
     margin: 18px auto 0;
   }
 
+  /* ── INFO BANNER ─────────────────────────────── */
+  .info-banner {
+    max-width: 720px;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 14px 20px;
+    border-radius: 8px;
+    background: rgba(245, 158, 11, 0.06);
+    border: 1px solid rgba(245, 158, 11, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .info-banner-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: #b8956a;
+    letter-spacing: 0.06em;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .info-banner-text strong {
+    color: #f59e0b;
+  }
+
+  .countdown {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .countdown-unit .val {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #f59e0b;
+    min-width: 28px;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .countdown-unit .lbl {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.4rem;
+    color: #8a6a38;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .countdown-sep {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: rgba(245, 158, 11, 0.35);
+    margin-top: -10px;
+  }
+
   /* ── GRID ───────────────────────────────────── */
   .grid {
     display: grid;
@@ -688,6 +756,22 @@
   <div class="divider"></div>
 </header>
 
+<div class="info-banner" id="info-banner">
+  <div class="info-banner-text">
+    <strong>Každé 3 dny přibývají nové hlášky!</strong><br>
+    Další přibudou za:
+  </div>
+  <div class="countdown" id="countdown">
+    <div class="countdown-unit"><span class="val" id="cd-d">0</span><span class="lbl">dní</span></div>
+    <span class="countdown-sep">:</span>
+    <div class="countdown-unit"><span class="val" id="cd-h">00</span><span class="lbl">hod</span></div>
+    <span class="countdown-sep">:</span>
+    <div class="countdown-unit"><span class="val" id="cd-m">00</span><span class="lbl">min</span></div>
+    <span class="countdown-sep">:</span>
+    <div class="countdown-unit"><span class="val" id="cd-s">00</span><span class="lbl">sek</span></div>
+  </div>
+</div>
+
 <div class="grid" id="grid"></div>
 
 <section class="about">
@@ -981,6 +1065,47 @@ const revealObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('.about p, .support, .projects, .install').forEach((el) => {
   revealObserver.observe(el);
 });
+
+// Odpočítávání do dalšího přidání hlášek
+// Cron: 0 6 */3 * * → dny 1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31 v 6:00 UTC
+(function () {
+  function getNextCronDate() {
+    const now = new Date();
+    const cronDays = [1,4,7,10,13,16,19,22,25,28,31];
+    const year = now.getUTCFullYear();
+    const month = now.getUTCMonth();
+
+    // Zkus tento měsíc
+    for (const d of cronDays) {
+      const candidate = new Date(Date.UTC(year, month, d, 6, 0, 0));
+      if (candidate > now) return candidate;
+    }
+    // Jinak první den příštího měsíce
+    return new Date(Date.UTC(year, month + 1, 1, 6, 0, 0));
+  }
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function updateCountdown() {
+    const now = new Date();
+    const target = getNextCronDate();
+    const diff = Math.max(0, target - now);
+
+    const totalSec = Math.floor(diff / 1000);
+    const days  = Math.floor(totalSec / 86400);
+    const hours = Math.floor((totalSec % 86400) / 3600);
+    const mins  = Math.floor((totalSec % 3600) / 60);
+    const secs  = totalSec % 60;
+
+    document.getElementById('cd-d').textContent = days;
+    document.getElementById('cd-h').textContent = pad(hours);
+    document.getElementById('cd-m').textContent = pad(mins);
+    document.getElementById('cd-s').textContent = pad(secs);
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+})();
 
 // Service Worker registrace
 if ('serviceWorker' in navigator) {
