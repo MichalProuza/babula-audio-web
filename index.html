@@ -486,6 +486,79 @@
     color: #8a6a38;
   }
 
+  /* ── PROJECTS SECTION ─────────────────────────── */
+  .projects {
+    max-width: 620px;
+    width: 100%;
+    margin-top: 48px;
+    border-top: 1px solid #2a1a08;
+    padding-top: 32px;
+    text-align: center;
+    opacity: 0.15;
+    transform: translateY(10px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .projects.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .projects-heading {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: #b8956a;
+    margin-bottom: 20px;
+  }
+
+  .projects-links {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 24px;
+    border-radius: 10px;
+    background: rgba(245, 158, 11, 0.07);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    text-decoration: none;
+    color: #d4a24e;
+    transition: background 0.2s, transform 0.2s, border-color 0.2s;
+    min-width: 180px;
+  }
+
+  .project-card:hover {
+    background: rgba(245, 158, 11, 0.13);
+    border-color: rgba(245, 158, 11, 0.35);
+    transform: translateY(-2px);
+  }
+
+  .project-card .project-icon {
+    font-size: 1.6rem;
+  }
+
+  .project-card .project-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #f5c566;
+  }
+
+  .project-card .project-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    color: #8a6a38;
+    letter-spacing: 0.05em;
+  }
+
   /* ── INSTALL SECTION ──────────────────────────── */
   .install {
     max-width: 620px;
@@ -633,6 +706,22 @@
       <img src="qr_platba.png" alt="QR Platba" />
       <span>QR Platba</span>
     </div>
+  </div>
+</section>
+
+<section class="projects">
+  <p class="projects-heading">Další projekty od autora</p>
+  <div class="projects-links">
+    <a class="project-card" href="https://betonovehodiny.cz" target="_blank" rel="noopener">
+      <span class="project-icon">🕰️</span>
+      <span class="project-name">betonovehodiny.cz</span>
+      <span class="project-desc">Betonové hodiny české výroby</span>
+    </a>
+    <a class="project-card" href="https://rodinnykalendar.cz" target="_blank" rel="noopener">
+      <span class="project-icon">📅</span>
+      <span class="project-name">rodinnykalendar.cz</span>
+      <span class="project-desc">Rodinný kalendář na míru</span>
+    </a>
   </div>
 </section>
 
@@ -889,7 +978,7 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.3 });
 
-document.querySelectorAll('.about p, .support, .install').forEach((el) => {
+document.querySelectorAll('.about p, .support, .projects, .install').forEach((el) => {
   revealObserver.observe(el);
 });
 
