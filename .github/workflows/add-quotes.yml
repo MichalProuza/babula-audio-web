@@ -1,0 +1,38 @@
+name: Přidej nové hlášky
+
+on:
+  schedule:
+    # Každých 72 hodin (každé 3 dny v 6:00 UTC)
+    - cron: '0 6 */3 * *'
+  workflow_dispatch: # Ruční spuštění
+
+permissions:
+  contents: write
+
+jobs:
+  add-quotes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Spusť skript pro přidání hlášek
+        id: add
+        run: python .github/scripts/add_quotes.py
+
+      - name: Commit a push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html Nazvy_hlasek.md
+          if git diff --cached --quiet; then
+            echo "Žádné změny k commitnutí."
+            exit 0
+          fi
+          git commit -m "Přidány nové hlášky na web (automaticky)"
+          git push
