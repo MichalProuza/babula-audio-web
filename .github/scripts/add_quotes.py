@@ -42,24 +42,30 @@ def get_existing_nums(html):
     return nums
 
 
+def get_labels_from_md(md_content):
+    """Načte mapování číslo→label z tabulek v Nazvy_hlasek.md."""
+    labels = {}
+    for line in md_content.splitlines():
+        m = re.match(r'\|\s*(\d{3})\s*\|\s*(.+?)\s*\|\s*`[^`]+`\s*\|', line)
+        if m:
+            labels[m.group(1)] = m.group(2).strip()
+    return labels
+
+
 def label_from_filename(filename):
-    """Odvodí zobrazovaný název z názvu souboru.
+    """Záložní odvozen název z názvu souboru (pokud není v Nazvy_hlasek.md).
 
     Příklad: '033_hovado.mp3' → 'Hovado'
-             '042_30piv.mp3'  → '30piv'
     """
-    # Odstraní číslo a příponu
     name = re.sub(r'^\d{3}_', '', filename)
     name = re.sub(r'\.mp3$', '', name, flags=re.IGNORECASE)
-    # První písmeno velké
     if name and name[0].isalpha():
         name = name[0].upper() + name[1:]
     return name
 
 
-def build_entry(num, filename, index_in_batch):
+def build_entry(num, filename, label):
     """Vytvoří řádek pro sounds pole."""
-    label = label_from_filename(filename)
     icon = EMOJI_POOL[int(num) % len(EMOJI_POOL)]
     color = COLORS[int(num) % len(COLORS)]
     file_path = f'Audio_files/{filename}'
@@ -117,6 +123,11 @@ def main():
     with open(INDEX_PATH, 'r', encoding='utf-8') as f:
         html = f.read()
 
+    with open(TRACKING_PATH, 'r', encoding='utf-8') as f:
+        md = f.read()
+
+    md_labels = get_labels_from_md(md)
+
     existing = get_existing_nums(html)
     all_files = get_audio_files()
 
@@ -138,8 +149,8 @@ def main():
     new_entries = []
     entries_info = []
     for i, (num, filename) in enumerate(to_add):
-        label = label_from_filename(filename)
-        entry = build_entry(num, filename, i)
+        label = md_labels.get(num) or label_from_filename(filename)
+        entry = build_entry(num, filename, label)
         new_entries.append(entry)
         entries_info.append((num, filename, label))
         print(f'  {num} - {label} ({filename})')
@@ -151,8 +162,6 @@ def main():
     print('index.html aktualizován.')
 
     # Aktualizuj Nazvy_hlasek.md
-    with open(TRACKING_PATH, 'r', encoding='utf-8') as f:
-        md = f.read()
     updated_md = update_tracking_md(md, entries_info)
     with open(TRACKING_PATH, 'w', encoding='utf-8') as f:
         f.write(updated_md)

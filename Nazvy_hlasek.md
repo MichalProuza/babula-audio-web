@@ -46,9 +46,9 @@ Soubory v `Audio_files/` pojmenovávej: `001_nazevbezdiakritikyamezer.mp3`
 
 ---
 | 033 | Hovado | `033_hovado.mp3` |
-| 034 | Hratnebudu | `034_hratnebudu.mp3` |
-| 035 | Coklapitpivo | `035_coklapitpivo.mp3` |
-| 036 | Dluzispivo | `036_dluzispivo.mp3` |
+| 034 | Hrát nebudu | `034_hratnebudu.mp3` |
+| 035 | Pít pivo | `035_coklapitpivo.mp3` |
+| 036 | Dlužíš mi pivo | `036_dluzispivo.mp3` |
 
 ---
 
