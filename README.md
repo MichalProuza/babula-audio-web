@@ -17,6 +17,7 @@ Webová stránka, kde si kliknutím na dlaždici přehrajete ikonické hlášky 
 - Offline podpora díky Service Workeru
 - Responzivní grid (4 sloupce → 2 na mobilu)
 - Plynulé animace při načtení a scrollování
+- Odpočítávání do dalšího přidání nových hlášek (live countdown)
 
 ## Technologie
 
@@ -24,6 +25,7 @@ Webová stránka, kde si kliknutím na dlaždici přehrajete ikonické hlášky 
 - **GitHub Pages** – hosting a automatický deploy
 - **PWA** – manifest + Service Worker pro offline a instalaci
 - **Google Fonts** – Space Mono, Syne
+- **Google Analytics** – sledování návštěvnosti (GA4)
 
 ## Struktura projektu
 
