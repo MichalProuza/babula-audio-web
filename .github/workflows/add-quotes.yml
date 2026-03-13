@@ -38,7 +38,7 @@ jobs:
           git push
 
       - name: Notifikace e-mailem (dochází hlášky)
-        if: steps.add.outputs.remaining_count != '' && fromJSON(steps.add.outputs.remaining_count) <= 8
+        if: steps.add.outputs.remaining_count != '' && fromJSON(steps.add.outputs.remaining_count) <= 100
         env:
           MAIL_FROM: ${{ secrets.NOTIFY_MAIL_FROM }}
           MAIL_TO: ${{ secrets.NOTIFY_MAIL_TO }}
