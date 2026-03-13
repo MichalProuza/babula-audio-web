@@ -158,11 +158,16 @@ def main():
         f.write(updated_md)
     print('Nazvy_hlasek.md aktualizován.')
 
-    # Zapiš počet přidaných pro GitHub Actions output
+    # Zbývající hlášky po přidání
+    remaining = len(candidates) - len(to_add)
+    print(f'Zbývá {remaining} hlášek ve frontě.')
+
+    # Zapiš počet přidaných a zbývajících pro GitHub Actions output
     github_output = os.environ.get('GITHUB_OUTPUT', '')
     if github_output:
         with open(github_output, 'a') as f:
             f.write(f'added_count={len(to_add)}\n')
+            f.write(f'remaining_count={remaining}\n')
 
 
 if __name__ == '__main__':

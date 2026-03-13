@@ -36,3 +36,44 @@ jobs:
           fi
           git commit -m "Přidány nové hlášky na web (automaticky)"
           git push
+
+      - name: Notifikace e-mailem (dochází hlášky)
+        if: steps.add.outputs.remaining_count != '' && fromJSON(steps.add.outputs.remaining_count) <= 8
+        env:
+          MAIL_FROM: ${{ secrets.NOTIFY_MAIL_FROM }}
+          MAIL_TO: ${{ secrets.NOTIFY_MAIL_TO }}
+          MAIL_PASSWORD: ${{ secrets.NOTIFY_MAIL_PASSWORD }}
+          REMAINING: ${{ steps.add.outputs.remaining_count }}
+        run: |
+          python - <<'EOF'
+          import smtplib, os
+          from email.mime.text import MIMEText
+
+          remaining = int(os.environ['REMAINING'])
+          batch_size = 4
+          batches_left = remaining // batch_size
+          days_left = batches_left * 3
+
+          subject = f"⚠️ Babula.cz – dochází hlášky (zbývá {remaining})"
+          body = f"""Ahoj!
+
+          Automatický systém babula.cz ti oznamuje, že ve frontě zbývá pouze {remaining} hlášek.
+
+          To jsou přibližně {batches_left} přidání ({days_left} dní).
+
+          Je čas nahrát nové soubory MP3 do složky Audio_files/ v repozitáři!
+
+          -- babula.cz automatická notifikace
+          """
+
+          msg = MIMEText(body, 'plain', 'utf-8')
+          msg['Subject'] = subject
+          msg['From'] = os.environ['MAIL_FROM']
+          msg['To'] = os.environ['MAIL_TO']
+
+          with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+              smtp.login(os.environ['MAIL_FROM'], os.environ['MAIL_PASSWORD'])
+              smtp.sendmail(os.environ['MAIL_FROM'], os.environ['MAIL_TO'], msg.as_string())
+
+          print(f"E-mail odeslán na {os.environ['MAIL_TO']}")
+          EOF
