@@ -9,6 +9,9 @@ on:
 permissions:
   contents: write
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   add-quotes:
     runs-on: ubuntu-latest
@@ -38,7 +41,7 @@ jobs:
           git push
 
       - name: Notifikace e-mailem (dochází hlášky)
-        if: steps.add.outputs.remaining_count != '' && fromJSON(steps.add.outputs.remaining_count) <= 100
+        if: steps.add.outputs.remaining_count != '' && fromJSON(steps.add.outputs.remaining_count) <= 8
         env:
           MAIL_FROM: ${{ secrets.NOTIFY_MAIL_FROM }}
           MAIL_TO: ${{ secrets.NOTIFY_MAIL_TO }}
